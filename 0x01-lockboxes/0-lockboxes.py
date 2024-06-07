@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-this is lockboxes problem
+Solution to lockboxes problem
 """
 
 
@@ -14,17 +14,14 @@ def canUnlockAll(boxes):
         return False
     elif (len(boxes)) == 0:
         return False
-    true_boxes = 0
-    boxes = sorted(boxes)
-    for i in range(len(boxes)):
-        if (i == 0):
-            i += 1
-        for x in boxes[i]:
-            z = x
-            if z + 1 == i + 1:
-                true_boxes += 1
+
+    for k in range(1, len(boxes) - 1):
+        boxes_checked = False
+        for idx in range(len(boxes)):
+            boxes_checked = k in boxes[idx] and k != idx
+            if boxes_checked:
                 break
-    if (true_boxes == len(boxes)):
-        return True
-    else:
-        return False
+        if boxes_checked is False:
+            return boxes_checked
+    return True
+    
