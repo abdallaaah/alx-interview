@@ -6,7 +6,6 @@ this is lockboxes problem
 
 def canUnlockAll(boxes):
     """just loop on list and track every index + 1 of my current box if it """
-    [[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
     true_boxes = 0
     i = 1
     boxes = sorted(boxes)
