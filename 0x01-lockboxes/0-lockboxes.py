@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/python3
 """
 this is lockboxes problem
 """
