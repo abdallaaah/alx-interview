@@ -5,8 +5,10 @@ this is lockboxes problem
 
 
 def canUnlockAll(boxes):
-    """just loop on list and track every index + 1 of my current box if it """
+    """ just loop on list and track every index + 1 of my current box if it """
     if (type(boxes)) is not list:
+        return False
+    elif (len(boxes)) == 0:
         return False
     true_boxes = 0
     boxes = sorted(boxes)
