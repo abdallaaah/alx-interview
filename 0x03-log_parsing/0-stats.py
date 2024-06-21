@@ -1,40 +1,39 @@
 #!/usr/bin/python3
-"""this file work with the stdin and make some file calculation from line"""
+"""
+Log parsing
+"""
+
 import sys
-from typing import List, Dict
 
+if __name__ == '__main__':
 
-def count_status_code(status_code: List[int]) -> Dict[int, int]:
-    """this function calculate count of each number in the list"""
-    status_code_counts = {}
-    for code in status_code:
-        if code in status_code_counts:
-            status_code_counts[code] += 1
-        else:
-            status_code_counts[code] = 1
-    return status_code_counts
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
 
+    def print_stats(stats: dict, file_size: int) -> None:
+        print("File size: {:d}".format(filesize))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
 
-count = 0
-file_size = 0
-status_code = []
-for line in sys.stdin:
-    line = line.rstrip()
-    data = []
-    count += 1
-    for word in line.split():
-        data.append(word)
-    if (data[7].isnumeric()):
-        status_code.append(data[7])
-        status_code.sort()
-    if (len(data) != 9):
-        print('the is a problem i will break')
-        break
-    file_size += int(data[-1])
-    if (count % 10 == 0 and count != 0):
-        status_code_countss = count_status_code(status_code)
-        print(f"File size: {file_size}")
-        for key, value in status_code_countss.items():
-            print(f"{key}: {value}")
-        file_size = 0
-        status_code = []
+    try:
+        for line in sys.stdin:
+            count += 1
+            data = line.split()
+            try:
+                status_code = data[-2]
+                if status_code in stats:
+                    stats[status_code] += 1
+            except BaseException:
+                pass
+            try:
+                filesize += int(data[-1])
+            except BaseException:
+                pass
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
+    except KeyboardInterrupt:
+        print_stats(stats, filesize)
+        raise
