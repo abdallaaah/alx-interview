@@ -38,3 +38,10 @@ for line in sys.stdin:
             print(f"{key}: {value}")
         file_size = 0
         status_code = []
+    elif (count == 1):
+        status_code_countss = count_status_code(status_code)
+        print(f"File size: {file_size}")
+        for key, value in status_code_countss.items():
+            print(f"{key}: {value}")
+        file_size = 0
+        status_code = []
