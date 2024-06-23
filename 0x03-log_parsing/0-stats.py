@@ -15,7 +15,7 @@ def count_status_code(status_code: List[int]) -> Dict[int, int]:
     return status_code_counts
 
 
-count = -1
+count = 0
 file_size = 0
 status_code = []
 for line in sys.stdin:
