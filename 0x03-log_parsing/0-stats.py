@@ -3,50 +3,47 @@
 import sys
 from typing import List, Dict
 
+
 def count_status_code(status_codes: List[int]) -> Dict[int, int]:
     """Calculate the count of each status code in the list."""
     status_code_counts = {}
-    check_list = [200, 301, 400, 401, 403, 404, 405, 500]
     for code in status_codes:
-        if code in check_list:
-            if code in status_code_counts:
-                status_code_counts[code] += 1
-            else:
-                status_code_counts[code] = 1
+        if code in status_code_counts:
+            status_code_counts[code] += 1
+        else:
+            status_code_counts[code] = 1
     return status_code_counts
+
+
+def print_metrics(file_size: int, status_code_counts: Dict[int, int]):
+    """Print the accumulated metrics."""
+    print(f"File size: {file_size}")
+    for code in sorted(status_code_counts.keys()):
+        print(f"{code}: {status_code_counts[code]}")
+
 
 count = 0
 file_size = 0
 status_code = []
 
-for line in sys.stdin:
-    line = line.rstrip()
-    data = []
-    count += 1
-    for word in line.split():
-        data.append(word)
+try:
+    for line in sys.stdin:
+        line = line.rstrip()
+        parts = line.split()
 
-    if len(data) != 9:
-        print('There is a problem, breaking the loop.')
-        break
+        if len(parts) != 9 or not parts[-2].isdigit() or not parts[-1].isdigit():
+            continue
 
-    if data[7].isnumeric():
-        status_code.append(int(data[7]))
-        status_code.sort()
+        count += 1
+        status_code.append(int(parts[-2]))
+        file_size += int(parts[-1])
 
-    file_size += int(data[-1])
-
-    if count % 10 == 0:
+        if count % 10 == 0:
+            status_code_counts = count_status_code(status_code)
+            print_metrics(file_size, status_code_counts)
+except KeyboardInterrupt:
+    pass
+finally:
+    if count % 10 != 0 or count == 0:
         status_code_counts = count_status_code(status_code)
-        print(f"File size: {file_size}")
-        for key, value in status_code_counts.items():
-            print(f"{key}: {value}")
-        file_size = 0
-        status_code = []
-
-# Print any remaining data after the loop ends
-if count % 10 != 0 and count > 0:
-    status_code_counts = count_status_code(status_code)
-    print(f"File size: {file_size}")
-    for key, value in status_code_counts.items():
-        print(f"{key}: {value}")
+        print_metrics(file_size, status_code_counts)
