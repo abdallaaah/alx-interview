@@ -6,11 +6,13 @@ from typing import List, Dict
 def count_status_code(status_codes: List[int]) -> Dict[int, int]:
     """Calculate the count of each status code in the list."""
     status_code_counts = {}
+    check_list = [200, 301, 400, 401, 403, 404, 405, 500]
     for code in status_codes:
-        if code in status_code_counts:
-            status_code_counts[code] += 1
-        else:
-            status_code_counts[code] = 1
+        if code in check_list:
+            if code in status_code_counts:
+                status_code_counts[code] += 1
+            else:
+                status_code_counts[code] = 1
     return status_code_counts
 
 count = 0
