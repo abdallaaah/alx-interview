@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This file works with stdin and performs some file calculations from the input lines."""
+"""This works with stdin and mke some file calculations from the input lines"""
 import sys
 from typing import List, Dict
 
@@ -31,7 +31,8 @@ try:
         line = line.rstrip()
         parts = line.split()
 
-        if len(parts) != 9 or not parts[-2].isdigit() or not parts[-1].isdigit():
+        if (len(parts) != 9 or not parts[-2].isdigit()
+                or not parts[-1].isdigit()):
             continue
 
         count += 1
