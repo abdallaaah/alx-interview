@@ -8,7 +8,7 @@ def count_status_code(status_codes: List[int]) -> Dict[int, int]:
     """Calculate the count of each status code in the list."""
     status_code_counts = {}
     for code in status_codes:
-        if code in status_code_counts:
+        if (code in status_code_counts):
             status_code_counts[code] += 1
         else:
             status_code_counts[code] = 1
@@ -31,20 +31,20 @@ try:
         line = line.rstrip()
         parts = line.split()
 
-        if (len(parts) != 9 or not parts[-2].isdigit()
-                or not parts[-1].isdigit()):
+        if ((len(parts) != 9 or not parts[-2].isdigit()
+                or not parts[-1].isdigit())):
             continue
 
         count += 1
         status_code.append(int(parts[-2]))
         file_size += int(parts[-1])
 
-        if count % 10 == 0:
+        if (count % 10 == 0):
             status_code_counts = count_status_code(status_code)
             print_metrics(file_size, status_code_counts)
 except KeyboardInterrupt:
     pass
 finally:
-    if count % 10 != 0 or count == 0:
+    if (count % 10 != 0 or count == 0):
         status_code_counts = count_status_code(status_code)
         print_metrics(file_size, status_code_counts)
