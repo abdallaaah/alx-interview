@@ -1,4 +1,5 @@
 #!/usr/bin/node
+// fetch characters name from movie id, it is request inside request
 
 const { promises } = require('dns')
 const request = require('request')
